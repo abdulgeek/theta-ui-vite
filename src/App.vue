@@ -1,30 +1,57 @@
 <template>
-	<div id="nav">
-		<router-link to="/">Home</router-link> |
-		<router-link to="/about">About</router-link>
+	<div>
+		<div v-if="$window.location.origin.includes('test')" class="banner" style="background-color: #03b3b2; color: white">TEST</div>
+		<div v-if="$window.location.origin.includes('localhost')" class="banner" style="background-color: #82ba00; color: white">DEVELOPMENT</div>
+		<router-view v-if="loaded"></router-view>
 	</div>
-	<router-view />
 </template>
 
 <style>
-#app {
-	font-family: Avenir, Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	text-align: center;
-	color: #2c3e50;
+.pointer {
+	cursor: pointer;
 }
-
-#nav {
-	padding: 30px;
+.loader {
+	position: fixed;
+	z-index: 888;
+	top: 30%;
+	left: 50%;
+	transform: translateX(-50%);
 }
-
-#nav a {
-	font-weight: bold;
-	color: #2c3e50;
+div.application {
+	font-family: "Open Sans", Helvetica, Arial, monospace, sans-serif;
+	margin: 0px;
 }
-
-#nav a.router-link-exact-active {
-	color: #42b983;
+div.banner {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 9;
+	padding: 5px 10px;
+	border-radius: 0 0 5px 5px;
+	font-family: "Open Sans", sans-serif;
+}
+.ellipsis {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
 }
 </style>
+
+<script>
+/* eslint-disable no-console */
+
+export default {
+	data: function () {
+		return {
+			loaded: false
+		};
+	},
+	mounted: function () {
+		document.fonts.ready.then(
+			function () {
+				this.loaded = true;
+			}.bind(this)
+		);
+	}
+};
+</script>
